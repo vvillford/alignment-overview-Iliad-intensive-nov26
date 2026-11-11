@@ -1,0 +1,127 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{paper-common}[2026/08/30 Shared setup for William Ford's papers]
+
+% Page layout and general document tools
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[a4paper,top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+\pagestyle{plain}
+\setlength{\marginparwidth}{2cm}
+
+% Draft notes
+\RequirePackage{xargs}
+\RequirePackage[pdftex,dvipsnames]{xcolor}
+\RequirePackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\makeatletter
+\providecommand\@dotsep{5}
+\renewcommand{\listoftodos}[1][\@todonotes@todolistname]{\@starttoc{tdo}{#1}}
+\makeatother
+
+% Mathematics
+\RequirePackage{mathtools,amsfonts,amsthm,amssymb,mathrsfs}
+\RequirePackage{dsfont}
+\RequirePackage{derivative}
+\RequirePackage[shortlabels]{enumitem}
+\setlist[enumerate]{nosep}
+\numberwithin{equation}{section}
+
+% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{problem}{Problem}
+\newtheorem{openproblem}{Open problem}
+
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+% Frequently used mathematical notation
+\newcommand{\bm}{\boldsymbol}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\K}{\mathcal{K}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\PP}{\mathcal{P}}
+\newcommand{\Rdown}{\mathbb{R}\cup\{-\infty\}}
+\newcommand{\Rup}{\mathbb{R}\cup\{\infty\}}
+\newcommand{\di}{\mathrm{d}}
+\newcommand{\E}{\mathcal{E}}
+\DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Image}{im}
+\DeclareMathOperator{\ri}{ri}
+\DeclareMathOperator{\aff}{aff}
+\DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\id}{Id}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\supp}{spt}
+\DeclareMathOperator{\spt}{spt}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\dist}{Dist}
+\DeclareMathOperator{\loc}{loc}
+\DeclareMathOperator{\lip}{Lip}
+\DeclareMathOperator{\Leb}{Leb}
+\DeclareMathOperator{\diverg}{div}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\qedwhite}{\hfill\ensuremath{\square}}
+
+% Bibliography. Each project chooses its checked-in resource with
+% \addbibresource in main.tex.
+\RequirePackage[backend=biber]{biblatex}
+
+% Figures and diagrams
+\RequirePackage{tikz}
+\usetikzlibrary{shapes.misc,arrows.meta,calc,decorations.pathreplacing,positioning}
+\tikzset{
+  cross/.style={
+    cross out,
+    draw=black,
+    minimum size=2*(#1-\pgflinewidth),
+    inner sep=0pt,
+    outer sep=0pt
+  },
+  cross/.default={1pt}
+}
+\RequirePackage{caption}
+
+% Shared colors
+\definecolor{beamerblue}{RGB}{51,51,178}
+\definecolor{targetcolour}{RGB}{51,51,178}
+\definecolor{sourcecolour}{RGB}{216,0,240}
+\definecolor{mixed}{RGB}{255,0,0}
+\definecolor{amaranth}{rgb}{0.9,0.17,0.31}
+\definecolor{amber}{rgb}{1.0,0.75,0.0}
+\definecolor{amber2}{rgb}{1.0,0.49,0.0}
+
+% Nomenclature and links
+\RequirePackage{nomentbl}
+\RequirePackage{hyperref}
+
+% Reusable footnote helpers
+\newcommand{\footremember}[2]{%
+  \footnote{#2}%
+  \newcounter{#1}%
+  \setcounter{#1}{\value{footnote}}%
+}
+\newcommand{\footrecall}[1]{\footnotemark[\value{#1}]}
+
+% Numbered proof steps
+\newcounter{step}
+\newcommand{\step}{%
+  \refstepcounter{step}%
+  \textbf{\vspace{1mm}\\\noindent Step \thestep: }%
+}
+\newcommand{\resetstep}{\setcounter{step}{0}}
